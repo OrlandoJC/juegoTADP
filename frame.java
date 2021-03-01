@@ -63,23 +63,48 @@ class Juego {
 
   public void evaluarTipoA(int n) {
     if (this.gano) {
-        JOptionPane.showMessageDialog(null, "ganaste", "INFORMATION_MESSAGE", JOptionPane.INFORMATION_MESSAGE);
+      JOptionPane.showMessageDialog(
+        null,
+        "ganaste",
+        "INFORMATION_MESSAGE",
+        JOptionPane.INFORMATION_MESSAGE
+      );
       return;
     }
 
     if (this.intentosActuales <= this.intentos) {
       if (n > this.numeroAdivinar) {
-            JOptionPane.showMessageDialog(null, "El numero es mayor que el oculto", "WARNING_MESSAGE", JOptionPane.WARNING_MESSAGE);
+        JOptionPane.showMessageDialog(
+          null,
+          "El numero es mayor que el oculto",
+          "WARNING_MESSAGE",
+          JOptionPane.WARNING_MESSAGE
+        );
       } else if (n < this.numeroAdivinar) {
-          JOptionPane.showMessageDialog(null, "El numero es menor que el oculto", "WARNING_MESSAGE", JOptionPane.WARNING_MESSAGE);
-      } else{ 
-          this.gano = true;
-            JOptionPane.showMessageDialog(null, "ganaste", "INFORMATION_MESSAGE", JOptionPane.INFORMATION_MESSAGE);
-         this.intentosActuales++;
-     }
+        JOptionPane.showMessageDialog(
+          null,
+          "El numero es menor que el oculto",
+          "WARNING_MESSAGE",
+          JOptionPane.WARNING_MESSAGE
+        );
+      } else {
+        this.gano = true;
+        JOptionPane.showMessageDialog(
+          null,
+          "ganaste",
+          "INFORMATION_MESSAGE",
+          JOptionPane.INFORMATION_MESSAGE
+        );
+      }
+
+      this.intentosActuales++;
     } else {
-      JOptionPane.showMessageDialog(null, "El numero es menor que el oculto",
-  "ERROR_MESSAGE", JOptionPane.WARNING_MESSAGE);
+      JOptionPane.showMessageDialog(
+        null,
+        "Perdiste",
+        "WARNING_MESSAGE",
+        JOptionPane.WARNING_MESSAGE
+      );
       this.perdio = true;
     }
   }
@@ -89,7 +114,13 @@ class Juego {
   public void opcionComputadora() {
     this.pcIntento = aleatorio(this.pcMin, pcMax);
 
-    System.out.println("la pc eligio el numero " + this.pcIntento);
+    JOptionPane.showMessageDialog(
+          null,
+          "la pc eligio el numero " + this.pcIntento,
+          "WARNING_MESSAGE",
+          JOptionPane.WARNING_MESSAGE
+    );
+   
   }
 
   public void respuestaUsuario(int opc) {
@@ -113,7 +144,12 @@ class Juego {
         break;
       case 3:
         this.gano = true;
-        System.out.println("ganaste");
+         JOptionPane.showMessageDialog(
+          null,
+          " gano la pc",
+          "WARNING_MESSAGE",
+          JOptionPane.WARNING_MESSAGE
+    );
         break;
     }
   }
@@ -130,26 +166,6 @@ class Juego {
 public class frame {
 
   public static void main(String[] args) {
-  
-
-    //     //tipoB
-    //     int oculto = teclado.leeInt();
-    //     Juego juego = new Juego(2, 'B', 1000);
-    //     juego.setOculto(oculto);
-    //     juego.infoJuego();
-
-    // //tipoA
-    //     while(!juego.gano()) {
-
-    //         juego.opcionComputadora(); // 1, N
-
-    //         System.out.println("Elige opcion 1(mayor) 2(menor) 3(igual)");
-    //         int opc = teclado.leeInt();
-
-    //         juego.respuestaUsuario(opc);
-
-    //     }
-
     JFrame frame = new JFrame("NUEVA VENTANA");
     JPanel panelDificultad = new JPanel();
 
@@ -213,10 +229,14 @@ public class frame {
             juego.infoJuego();
 
             while (!juego.gano()) {
-                  int dato = Integer.parseInt(JOptionPane.showInputDialog("ingresa el numero"));
+              int dato = Integer.parseInt(
+                JOptionPane.showInputDialog("ingresa el numero")
+              );
 
-                 juego.evaluarTipoA(dato);
+              juego.evaluarTipoA(dato);
             }
+
+            System.exit(0);
           }
         }
       }
@@ -225,9 +245,55 @@ public class frame {
     buttonB.addActionListener(
       new ActionListener() {
         public void actionPerformed(ActionEvent e) {
-          MyFrameConfigB frame = new MyFrameConfigB("Ventana nueva");
+          int dificultad = radioButton1.isSelected()
+            ? 1
+            : radioButton2.isSelected() ? 2 : -1;
 
-          frame.setVisible(true);
+          String[] options = { "JUGAR" };
+          JPanel panel = new JPanel();
+          JLabel lbl = new JLabel(" Introduzca N ");
+          JTextField txt = new JTextField(10);
+
+          JLabel lbl2 = new JLabel(" Introduzca X");
+          JTextField txt2 = new JTextField(10);
+          panel.add(lbl);
+          panel.add(txt);
+
+          panel.add(lbl2);
+          panel.add(txt2);
+          int selectedOption = JOptionPane.showOptionDialog(
+            null,
+            panel,
+            "The Title",
+            JOptionPane.NO_OPTION,
+            JOptionPane.PLAIN_MESSAGE,
+            null,
+            options,
+            options[0]
+          );
+
+          if (selectedOption == 0) {
+            int N = Integer.parseInt(txt.getText());
+            int x = Integer.parseInt(txt2.getText());
+            Juego juego = new Juego(dificultad, 'B', N);
+            juego.setOculto(x);
+            juego.infoJuego();
+
+            while (!juego.gano()) {
+              juego.opcionComputadora(); // 1, N
+
+              System.out.println("Elige opcion 1(mayor) 2(menor) 3(igual)");
+
+              int opc = Integer.parseInt(
+                JOptionPane.showInputDialog("Elige opcion 1(mayor) 2(menor) 3(igual)")
+              );
+
+              juego.respuestaUsuario(opc);
+            }
+
+            System.exit(0);
+
+          }
         }
       }
     );
