@@ -6,163 +6,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import javax.swing.*;
 
-class Teclado {
-
-  public static BufferedReader t = new BufferedReader(
-    new InputStreamReader(System.in)
-  );
-
-  //Metodos
-  public int leeInt() {
-    int resultado = 0;
-    try {
-      resultado = Integer.parseInt(t.readLine());
-    } catch (IOException e) {
-      System.out.println("Error X: " + e);
-      java.lang.System.exit(1); //termina con un gracioso error
-    }
-    return resultado;
-  } //fin de int
-
-  public float leeFloat() {
-    float resultado = (float) 0.0;
-    try {
-      Float f = new Float(t.readLine());
-      resultado = f.floatValue();
-    } catch (IOException e) {
-      System.out.println("Error X: " + e);
-      java.lang.System.exit(1); //termina con un gracioso error
-    }
-    return resultado;
-  } //fin de float
-
-  public double leeDouble() {
-    double resultado = 0.0;
-    try {
-      Double d = new Double(t.readLine());
-      resultado = d.doubleValue();
-    } catch (IOException e) {
-      System.out.println("Error X: " + e);
-      java.lang.System.exit(1); //termina con un gracioso error
-    }
-    return resultado;
-  } //fin de double
-
-  public String leeString() {
-    String resultado = new String();
-    try {
-      resultado = t.readLine();
-    } catch (IOException e) {
-      System.out.println("Error X: " + e);
-      java.lang.System.exit(1); //termina con un gracioso error
-    }
-    return resultado;
-  } //fin de string
-
-  public char leeChar() {
-    char c = leeString().charAt(0);
-    return c;
-  }
-}
-
-//Ventana de introduccion de numero
-class Input extends JFrame {
-
-  JPanel panel;
-  JLabel label;
-
-  Input(String title) {
-    super(title);
-    Font f = new Font("TimesRoman", Font.BOLD, 25);
-
-    setLocation(400, 300);
-
-    setSize(300, 200);
-    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-    JLabel miLabel = new JLabel("Introduzca su numero", JLabel.CENTER);
-    JTextField miText = new JTextField(10);
-
-    JButton ok = new JButton("OK");
-
-    add(miLabel);
-    add(miText);
-
-    add(ok);
-    setLayout(new GridLayout(3, 1, 10, 10));
-  }
-}
-
-//Configuracion del modo A
-
-class MyFrameConfigB extends JFrame {
-
-  JPanel panel;
-  JLabel label;
-
-  MyFrameConfigB(String title) {
-    super(title);
-    Font f = new Font("TimesRoman", Font.BOLD, 35);
-
-    setSize(350, 200);
-    setLocation(400, 300);
-    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-    JLabel miLabel = new JLabel("Introduzca N");
-    JTextField miText = new JTextField(10);
-    JButton miBoton = new JButton("Empezar el juego");
-
-    JLabel miLabel2 = new JLabel("Introduzca X");
-    JTextField miText2 = new JTextField(10);
-
-    add(miLabel);
-    add(miText);
-
-    add(miLabel);
-    add(miText);
-    add(miLabel2);
-    add(miText2);
-
-    add(miBoton);
-
-    setLayout(new GridLayout(5, 1, 10, 10));
-  }
-}
-
-//Configuracion del modo B
-
-class MyFrameConfigA extends JFrame {
-
-  JPanel panel;
-  JLabel label;
-
-  MyFrameConfigA(String title) {
-    super(title);
-    Font f = new Font("TimesRoman", Font.BOLD, 35);
-
-    setSize(350, 200);
-    setLocation(400, 300);
-    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-    JLabel miLabel = new JLabel("Introduzca N");
-    JTextField miText = new JTextField(10);
-    JButton miBoton = new JButton("Empezar el juego");
-
-    miBoton.addActionListener(
-      new ActionListener() {
-        public void actionPerformed(ActionEvent e) {
-          Input in = new Input("Ventana nueva");
-          in.setVisible(true);
-        }
-      }
-    );
-    add(miLabel);
-    add(miText);
-    add(miBoton);
-    setLayout(new GridLayout(3, 1, 10, 10));
-  }
-}
-
 class Juego {
 
   private int intentos;
@@ -220,19 +63,23 @@ class Juego {
 
   public void evaluarTipoA(int n) {
     if (this.gano) {
-      System.out.println("ganaste");
+        JOptionPane.showMessageDialog(null, "ganaste", "INFORMATION_MESSAGE", JOptionPane.INFORMATION_MESSAGE);
       return;
     }
 
     if (this.intentosActuales <= this.intentos) {
-      if (n > this.numeroAdivinar) System.out.println(
-        "El numero es mayor que el oculto"
-      ); else if (n < this.numeroAdivinar) System.out.println(
-        "El numero es menor que el oculto"
-      ); else this.gano = true;
-      this.intentosActuales++;
+      if (n > this.numeroAdivinar) {
+            JOptionPane.showMessageDialog(null, "El numero es mayor que el oculto", "WARNING_MESSAGE", JOptionPane.WARNING_MESSAGE);
+      } else if (n < this.numeroAdivinar) {
+          JOptionPane.showMessageDialog(null, "El numero es menor que el oculto", "WARNING_MESSAGE", JOptionPane.WARNING_MESSAGE);
+      } else{ 
+          this.gano = true;
+            JOptionPane.showMessageDialog(null, "ganaste", "INFORMATION_MESSAGE", JOptionPane.INFORMATION_MESSAGE);
+         this.intentosActuales++;
+     }
     } else {
-      System.out.println(" perdiste");
+      JOptionPane.showMessageDialog(null, "El numero es menor que el oculto",
+  "ERROR_MESSAGE", JOptionPane.WARNING_MESSAGE);
       this.perdio = true;
     }
   }
@@ -283,22 +130,7 @@ class Juego {
 public class frame {
 
   public static void main(String[] args) {
-    //    Teclado teclado = new Teclado();
-
-    // //    int dificultad = teclado.leeInt();
-    // //    char modo = teclado.leeChar();
-    // //    int rangoMax  = teclado.leeInt();
-
-    // //     Juego juego = new Juego(1, 'A', 10);
-    // //     juego.infoJuego();
-
-    // // //tipoA
-    // //     while(!juego.gano()) {
-    // //         int numero = teclado.leeInt();
-
-    // //         juego.evaluar(numero);
-
-    // //     }
+  
 
     //     //tipoB
     //     int oculto = teclado.leeInt();
@@ -352,12 +184,40 @@ public class frame {
     buttonA.addActionListener(
       new ActionListener() {
         public void actionPerformed(ActionEvent e) {
-          MyFrameConfigA frame = new MyFrameConfigA("Ventana nueva");
           int dificultad = radioButton1.isSelected()
             ? 1
             : radioButton2.isSelected() ? 2 : -1;
 
-          frame.setVisible(true);
+          String[] options = { "JUGAR" };
+          JPanel panel = new JPanel();
+          JLabel lbl = new JLabel(" Introduzca N ");
+          JTextField txt = new JTextField(10);
+          panel.add(lbl);
+          panel.add(txt);
+          int selectedOption = JOptionPane.showOptionDialog(
+            null,
+            panel,
+            "The Title",
+            JOptionPane.NO_OPTION,
+            JOptionPane.PLAIN_MESSAGE,
+            null,
+            options,
+            options[0]
+          );
+
+          if (selectedOption == 0) {
+            int N = Integer.parseInt(txt.getText());
+
+            Juego juego = new Juego(dificultad, 'A', N);
+
+            juego.infoJuego();
+
+            while (!juego.gano()) {
+                  int dato = Integer.parseInt(JOptionPane.showInputDialog("ingresa el numero"));
+
+                 juego.evaluarTipoA(dato);
+            }
+          }
         }
       }
     );
