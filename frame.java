@@ -1,7 +1,7 @@
 import javax.swing.*;
 import java.awt.*;  
-import javax.swing.BorderFactory;
-
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -80,8 +80,119 @@ import java.io.InputStreamReader;
     return c;
   }
 
- }//fin de programa     
+ }
     
+
+//Ventana de introduccion de numero
+class Input extends JFrame
+{
+  JPanel panel;
+  JLabel label;
+
+  Input( String title )
+  {
+    super( title );          
+
+    Font f = new Font("TimesRoman",Font.BOLD,25);
+   
+    setLocation(400, 300);
+
+    setSize( 300, 200 );
+    setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
+   
+    JLabel miLabel = new JLabel("Introduzca su numero", JLabel.CENTER);
+	JTextField miText = new JTextField(10);
+
+    JButton ok = new JButton("OK");
+
+    add(miLabel);
+    add(miText);
+
+    add(ok);
+    setLayout(new GridLayout(3, 1, 10, 10));
+  }
+
+}
+
+//Configuracion del modo A
+
+class MyFrameConfigB extends JFrame
+{
+  JPanel panel;
+  JLabel label;
+
+  MyFrameConfigB( String title )
+  {
+    super( title );          
+
+    Font f = new Font("TimesRoman",Font.BOLD,35);
+   
+
+    setSize( 350, 200 );
+    setLocation(400, 300);
+    setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
+
+    JLabel miLabel = new JLabel("Introduzca N");
+	JTextField miText = new JTextField(10);
+    JButton miBoton = new JButton("Empezar el juego");
+    
+    JLabel miLabel2 = new JLabel("Introduzca X");
+	JTextField miText2 = new JTextField(10);
+
+    add(miLabel);
+    add(miText);
+
+
+    add(miLabel);
+	add(miText);
+    add(miLabel2);
+	add(miText2);
+    
+	add(miBoton);
+
+    setLayout(new GridLayout(5,1,10, 10));
+
+   
+  }
+
+}
+
+//Configuracion del modo B
+
+
+class MyFrameConfigA extends JFrame
+{
+  JPanel panel;
+  JLabel label;
+
+  MyFrameConfigA( String title)
+  {
+    super( title );          
+
+    Font f = new Font("TimesRoman",Font.BOLD,35);
+   
+
+    setSize( 350, 200 );
+    setLocation(400, 300);
+    setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
+
+    JLabel miLabel = new JLabel("Introduzca N");
+	JTextField miText = new JTextField(10);
+    JButton miBoton = new JButton("Empezar el juego");
+    
+    miBoton.addActionListener(new ActionListener() {
+        public void actionPerformed(ActionEvent e) {
+            Input in = new Input("Ventana nueva");
+            in.setVisible( true );
+        }
+
+    });
+    add(miLabel);
+	add(miText);
+	add(miBoton);
+    setLayout(new GridLayout(3,1,10, 10 ));
+  }
+}
 
  class Juego {
     
@@ -212,83 +323,106 @@ public class frame {
 
 
 
-       Teclado teclado = new Teclado();
+    //    Teclado teclado = new Teclado();
 
-    //    int dificultad = teclado.leeInt();
-    //    char modo = teclado.leeChar();
-    //    int rangoMax  = teclado.leeInt();
+    // //    int dificultad = teclado.leeInt();
+    // //    char modo = teclado.leeChar();
+    // //    int rangoMax  = teclado.leeInt();
 
 
-    //     Juego juego = new Juego(1, 'A', 10);
+    // //     Juego juego = new Juego(1, 'A', 10);
+    // //     juego.infoJuego();
+
+
+
+    // // //tipoA
+    // //     while(!juego.gano()) {
+    // //         int numero = teclado.leeInt();
+
+    // //         juego.evaluar(numero);
+
+    // //     }
+
+
+
+    //     //tipoB
+    //     int oculto = teclado.leeInt();
+    //     Juego juego = new Juego(2, 'B', 1000);
+    //     juego.setOculto(oculto);
     //     juego.infoJuego();
-
-
-
+        
     // //tipoA
     //     while(!juego.gano()) {
-    //         int numero = teclado.leeInt();
 
-    //         juego.evaluar(numero);
+    //         juego.opcionComputadora(); // 1, N
+
+    //         System.out.println("Elige opcion 1(mayor) 2(menor) 3(igual)");
+    //         int opc = teclado.leeInt();
+
+    //         juego.respuestaUsuario(opc);
 
     //     }
 
-
-
-        //tipoB
-        int oculto = teclado.leeInt();
-        Juego juego = new Juego(2, 'B', 1000);
-        juego.setOculto(oculto);
-        juego.infoJuego();
-        
-    //tipoA
-        while(!juego.gano()) {
-
-            juego.opcionComputadora(); // 1, N
-
-            System.out.println("Elige opcion 1(mayor) 2(menor) 3(igual)");
-            int opc = teclado.leeInt();
-
-            juego.respuestaUsuario(opc);
-
-        }
-
       
-        // JFrame frame = new JFrame("NUEVA VENTANA");
-        // JPanel panelDificultad = new JPanel();
+        JFrame frame = new JFrame("NUEVA VENTANA");
+        JPanel panelDificultad = new JPanel();
 
-        // JPanel entreePanel = new JPanel();
-        // JPanel modo = new JPanel();
+        JPanel entreePanel = new JPanel();
+        JPanel modo = new JPanel();
 
 
 
-        // final ButtonGroup entreeGroup = new ButtonGroup();
+        final ButtonGroup entreeGroup = new ButtonGroup();
         
-        // JRadioButton radioButton;
+        final JRadioButton radioButton1;
+        final JRadioButton radioButton2;
+
     
-        // // frame.setResizable(false);
-        // frame.setLocation(500,400);
+        // frame.setResizable(false);
+        frame.setLocation(500,400);
 
-        // frame.add(new JLabel("Dificultad"));
-        // entreePanel.add(radioButton = new JRadioButton("Facil"));
-        // radioButton.setActionCommand("Facil");
-        // entreeGroup.add(radioButton);
-        // entreePanel.add(radioButton = new JRadioButton("Dificil"));
-        // radioButton.setActionCommand("Dificil");
-        // entreeGroup.add(radioButton);
+        frame.add(new JLabel("Dificultad"));
+        entreePanel.add(radioButton1 = new JRadioButton("Facil"));
+        radioButton1.setActionCommand("Facil");
+        entreeGroup.add(radioButton1);
+        entreePanel.add(radioButton2 = new JRadioButton("Dificil"));
+        radioButton2.setActionCommand("Dificil");
+        entreeGroup.add(radioButton2);
 
 
-        // frame.add(entreePanel);
-        // frame.add(new JLabel("Modo:"));
+        frame.add(entreePanel);
+        frame.add(new JLabel("Modo:"));
 
-        // frame.add(new JButton("A"));
-        // frame.add(new JButton("B"));
+        JButton buttonA = new JButton("A");
+        JButton buttonB= new JButton("B");
+
+        frame.add(buttonA);
+        frame.add(buttonB);
         
+        buttonA.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                MyFrameConfigA frame = new MyFrameConfigA("Ventana nueva");
+                int dificultad = radioButton1.isSelected() ? 1 : radioButton2.isSelected() ? 2 : -1 ;
+             
+                frame.setVisible( true );
+            }
 
-        // frame.setLayout(new GridLayout(5,1,10,10));
+        });
+
+        buttonB.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                MyFrameConfigB frame = new MyFrameConfigB("Ventana nueva");
+                
+                frame.setVisible( true );
+            }
+
+        });
+
+        frame.setLayout(new GridLayout(5,1,10,10));
           
-        // frame.pack();
-        // frame.setVisible(true);
-        // frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.pack();
+        frame.setVisible(true);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
       
     }
